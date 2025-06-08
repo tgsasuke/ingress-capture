@@ -3,30 +3,52 @@ import { ref, computed, onMounted } from "vue";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import StatsProgressBar from "@/components/StatsProgressBar.vue";
 
-
 const PLAYERS = ref([]);
+const agentData = ref(null);
+
+const minLogs = 0
+const maxDisplayPlayers = 50
 
 const sortedPlayers = computed(() => {
-  // logs 大於 10才顯示
   // 顯示前50名
   return PLAYERS.value
-    .filter((player) => player.logs > 10)
-    .sort((a, b) => b.incRealCaptures - a.incRealCaptures)
-    .slice(0, 50);
+    .filter((player) => Number(player.logs) >= minLogs)
+    .sort(sortedPlayersByCaptures)
+    .slice(0, maxDisplayPlayers)
+    .map(mapPlayers)
 });
 
+// 按實際獲得的captures排序
+const sortedPlayersByCaptures = (a, b) => {
+  const increaseCapturesA = Number(a.captures_end) - Number(a.captures)
+  const increaseCapturesB = Number(b.captures_end) - Number(b.captures)
+  return increaseCapturesB - increaseCapturesA
+}
+
+// 計算獲得的captures、ap、logs
+const mapPlayers = (player) => {
+  player.incRealCaptures = Number(player.captures_end) - Number(player.captures) || 0
+  player.incAp = Number(player.ap_end) - Number(player.ap) || 0
+  player.incLogs = Number(player.logs_end) - Number(player.logs) || 0
+  return player
+}
+
 const maxCapturesValue = computed(() => {
-  return Math.max(...PLAYERS.value.map((player) => player.incRealCaptures));
+  return Math.max(...PLAYERS.value.map((player) => Number(player.incRealCaptures)));
 });
 
 const maxLogsValue = computed(() => {
-  return Math.max(...PLAYERS.value.map((player) => player.incLogs));
+  return Math.max(...PLAYERS.value.map((player) => Number(player.incLogs)));
 });
 
 async function fetchPlayers() {
-  const response = await fetch("/src/assets/agent_data/agent_data.json");
-  const data = await response.json();
-  PLAYERS.value = data.players;
+  try {
+    const data = await import('@/assets/agent_data/agent_data.json');
+    agentData.value = data.default;
+    PLAYERS.value = agentData.value;
+  } catch (error) {
+    console.error('Failed to load agent data:', error);
+  }
 }
 
 onMounted(() => {
@@ -35,9 +57,9 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="w-full flex flex-col items-center justify-center max-w-screen-lg mx-auto pt-16">
+  <div class="w-full flex flex-col items-center justify-center max-w-screen-lg mx-auto pt-20">
     <h1 class="text-3xl font-bold pb-4">排行榜</h1>
-    <p class="text-sm text-white/80 self-end">* 排行榜將於活動期間不定期更新</p>
+    <p class="text-sm text-white/80 self-center lg:self-end">* 排行榜將於活動期間不定期更新</p>
     <p v-if="sortedPlayers.length === 0" class="text-sm text-white/80">* 目前無資料</p>
     <table class="w-full max-w-screen-lg table-fixed">
       <thead>

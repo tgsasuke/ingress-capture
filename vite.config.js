@@ -18,4 +18,8 @@ export default defineConfig({
     },
   },
   base: './',
+  publicDir: 'public',
+  build: {
+    assetsInclude: ['**/*.json']
+  }
 })

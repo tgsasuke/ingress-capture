@@ -5,7 +5,7 @@ const uploadUrl = "https://docs.google.com/forms/d/e/1FAIpQLSc_Pu49PUKg-KyzS5KT9
 </script>
 
 <template>
-  <div class="pt-16 lg:pt-16">
+  <div class="pt-20 lg:pt-20">
     <h1 class="text-2xl lg:text-3xl font-bold pb-4">
       活動辦法
     </h1>
