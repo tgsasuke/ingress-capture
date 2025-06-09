@@ -27,3 +27,13 @@ npm run dev
 ```sh
 npm run build
 ```
+
+### Update github io page
+
+```sh
+cd dist
+git add .
+git commit -m "deploy"
+git push -u https://tgsasuke.github.io/ingress-capture/ gh-pages
+```
+View the live site: [Ingress Capture](https://tgsasuke.github.io/ingress-capture/)

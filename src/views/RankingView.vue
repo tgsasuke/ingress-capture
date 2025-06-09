@@ -2,6 +2,7 @@
 import { ref, computed, onMounted } from "vue";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import StatsProgressBar from "@/components/StatsProgressBar.vue";
+import { getProfileList } from "@/services/api";
 
 const PLAYERS = ref([]);
 const agentData = ref(null);

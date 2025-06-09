@@ -21,5 +21,14 @@ export default defineConfig({
   publicDir: 'public',
   build: {
     assetsInclude: ['**/*.json']
+  },
+  server: {
+    proxy: {
+      '/iitc': {
+        target: 'https://www.quarks.idv.tw',
+        changeOrigin: true,
+        secure: true
+      }
+    }
   }
 })

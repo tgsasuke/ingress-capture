@@ -1,10 +1,16 @@
 <script setup>
-import { ref } from "vue";
+import { onMounted, ref } from "vue";
 import HomeView from "./views/HomeView.vue";
 import AboutView from "./views/AboutView.vue";
 import RankingView from "./views/RankingView.vue";
+import { getProfileList } from "./services/api";
 
 const currentPage = ref('home')
+
+// onMounted(async () => {
+//   const data = await getProfileList();
+//   console.log('data', data);
+// })
 </script>
 
 <template>
