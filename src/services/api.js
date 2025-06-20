@@ -12,9 +12,7 @@ const api = axios.create({
 
 export const getProfileList = async () => {
   try {
-    const response = await api.post('/ajax/profile.php', {
-      action: 'list'
-    })
+    const response = await api.get('/ajax/profile.php?action=list')
     return response.data
   } catch (error) {
     console.error('獲取檔案列表失敗:', error)

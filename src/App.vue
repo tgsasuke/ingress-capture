@@ -3,7 +3,7 @@ import { onMounted, ref } from "vue";
 import HomeView from "./views/HomeView.vue";
 import AboutView from "./views/AboutView.vue";
 import RankingView from "./views/RankingView.vue";
-import { getProfileList } from "./services/api";
+// import { getProfileList } from "./services/api";
 
 const currentPage = ref('home')
 
@@ -15,7 +15,7 @@ const currentPage = ref('home')
 
 <template>
   <div
-    class="relative w-full flex flex-col items-center justify-center pb-24"
+    class="relative w-full flex flex-col items-center justify-center pb-24 bg-zinc-900 text-white/80"
   >
     <!-- <nav class="fixed top-0 w-full backdrop-blur-sm z-50" :class="{ 'bg-black/50': $route.path === '/' }">
       <ul class="flex justify-center gap-4 h-16 items-center">
